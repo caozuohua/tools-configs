@@ -885,6 +885,18 @@ Observed 2026-06-27: `skill_view(name='gcp-vps-ops')` returned `not found`, `ski
 **Don't** create a new skill with the same name as a suspected-existing one — you'll get "already exists" on create, which confirms it was there all along. Use `skill_manage(action='patch')` instead.
 **Also note**: `search_files(pattern='*gcp*', path='~/.hermes/skills')` may return 0 hits on deep nested files due to result truncation. Narrow the search path (e.g., `path='~/.hermes/skills'`) rather than searching all of `~/.hermes/`.
 
+### Skill name lookup: try multiple forms before giving up
+Hermes skills can be stored in different path layouts, and `skill_view`'s lookup is name-based but may not match the directory name if the SKILL.md frontmatter declares a different `name:`. When the user says "skill X exists but I can't find it", try these name variants in order:
+
+1. **Exact name as given** — `skill_view("gcp-vps-ops")`
+2. **Category-qualified form** — if the skill lives under a subdirectory: `skill_view("devops/gcp-vps-ops")`
+3. **Frontmatter name vs directory name mismatch** — `skills_list()` returns the *canonical* name from frontmatter `name:` field, which may differ from the directory basename. If `skills_list` shows a skill named `gcp-vps-ops` but `skill_view("gcp-vps-ops")` fails, the on-disk path might be `gcp-vps-ops/gcp-vps-ops/SKILL.md` (nested). Try the full relative path shown in `skills_list`.
+4. **Plugin-qualified form** — if the skill comes from a plugin: `skill_view("pluginname:gcp-vps-ops")`
+5. **Search `skills_list` output by substring** — call `skills_list()` (no category filter) and grep for keywords. A skill might exist under a different name than the user remembers.
+6. **Check `~/.hermes/skills/` directly** — `search_files(pattern='SKILL.md', path='~/.hermes/skills', target='files')` to find all skill files, then grep frontmatter for the name.
+
+**Rule of thumb**: If `skills_list` shows a skill exists, at least one of the above 6 forms WILL resolve it. If none work, the skill is genuinely missing or corrupted (check disk directly with `read_file`).
+
 ### Changes not taking effect
 1. `hermes doctor` — check config and dependencies
 2. `hermes auth` — re-authenticate OAuth providers (or `hermes auth add <provider>`)
