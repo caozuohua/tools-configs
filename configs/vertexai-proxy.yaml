@@ -1,0 +1,25 @@
+# Hermes Agent - VertexAI Proxy 配置
+# 本地代理 → Google Vertex AI / Gemini 模型
+#
+# 启动代理: python scripts/vertexai_proxy.py (端口 18999)
+# 然后配置 Hermes 使用该代理作为 LLM provider
+
+model:
+  default: vertexai/gemini-3.5-flash
+  provider: vertexai
+  base_url: http://127.0.0.1:18999/v1
+  api_key: not-used-by-proxy-any-string-works
+
+# VertexAI 代理中间件配置
+vertexai_proxy:
+  listen: 127.0.0.1:18999
+  backend: vertexai
+  project: project-c1ed131b-6f02-49de-9f8
+  location: global
+  models:
+    - gemini-3.5-flash
+    - gemini-3.1-flash-lite
+    - gemini-2.5-pro
+    - gemini-2.0-flash
+  rate_limit: 100  # requests per minute
+  thinking_budget: 0  # Disable thinking to save tokens
