@@ -1,0 +1,11 @@
+[Unit]
+Description=Hermes Lite daily maintenance
+
+[Service]
+Type=oneshot
+User=hermes
+Group=hermes
+Environment=HERMES_HOME=/home/hermes/.hermes-lite
+ExecStart=/home/hermes/.hermes-lite/bin/backup-hermes-lite.sh
+Nice=10
+IOSchedulingClass=best-effort

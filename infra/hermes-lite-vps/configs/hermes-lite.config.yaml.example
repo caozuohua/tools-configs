@@ -1,0 +1,46 @@
+# HermesLite config template. Copy to ~/.hermes-lite/config.yaml and fill with
+# production values from a private backup or password manager.
+
+model:
+  default: openrouter/owl-alpha
+  fallback: ""
+
+providers:
+  openrouter:
+    base_url: "https://openrouter.ai/api/v1"
+    api_key_env: "OPENROUTER_API_KEY"
+  newapi:
+    base_url: "http://127.0.0.1:3000/v1"
+    api_key_env: "NEW_API_KEY"
+
+gateway:
+  platform: feishu
+  feishu:
+    app_id_env: "FEISHU_APP_ID"
+    app_secret_env: "FEISHU_APP_SECRET"
+    verification_token_env: "FEISHU_VERIFICATION_TOKEN"
+    encrypt_key_env: "FEISHU_ENCRYPT_KEY"
+
+security:
+  redact_secrets: true
+  env_passthrough:
+    - PATH
+    - HOME
+
+agent:
+  max_turns: 40
+  disabled_toolsets:
+    - browser
+    - tts
+
+toolsets:
+  - search
+  - file
+  - terminal
+  - memory
+
+memory:
+  enabled: true
+
+skills:
+  enabled: true

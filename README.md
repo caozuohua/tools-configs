@@ -54,6 +54,8 @@ tools-configs/
 ├── configs/                         # Configuration file templates
 │   ├── vertexai-proxy.yaml
 │   └── config.yaml
+├── infra/                           # VPS and service baseline templates
+│   └── hermes-lite-vps/             # HermesLite + new-api + x-ui VPS rebuild kit
 ├── references/                      # Shared reference documents
 └── .gitignore
 ```
@@ -170,6 +172,18 @@ Located under `skills/gcp-vps-ops/gcp-vps-ops/scripts/`:
 | `configs/auth.json` | Provider credential pool template (gitignored — never commit real credentials) |
 
 > ⚠️ `auth.json` and `config.yaml` contain sensitive fields and are listed in `.gitignore`. The checked-in versions are templates only.
+
+---
+
+## Infrastructure Baselines
+
+| Directory | Description |
+|-----------|-------------|
+| `infra/hermes-lite-vps/` | Public, non-secret rebuild kit for a small VPS running HermesLite, new-api, x-ui/xray, and nginx |
+
+The infrastructure baselines are designed for reproducible rebuilds without
+committing secrets. Keep real `.env` files, SQLite databases, TLS private keys,
+and `hermes-lite-baseline-*.tar.gz` archives outside this public repository.
 
 ---
 

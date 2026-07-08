@@ -1,0 +1,6 @@
+*.sh text eol=lf
+*.service.example text eol=lf
+*.timer.example text eol=lf
+*.conf text eol=lf
+*.yaml.example text eol=lf
+*.env.example text eol=lf
