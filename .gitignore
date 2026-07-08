@@ -1,2 +1,24 @@
 auth.json
 config.yaml
+
+# Secrets and machine-local state. Keep only *.example templates in git.
+.env
+.env.*
+!.env.example
+!*.env.example
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+backups/
+secrets/
+*.kubeconfig
